@@ -1,2 +1,3 @@
 pmsearch
 *.o
+.DS_Store
