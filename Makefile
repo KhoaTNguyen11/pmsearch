@@ -8,7 +8,7 @@ CXXFLAGS = -Wall -Wextra -O3 -std=c++20 -pthread
 TARGET = pmsearch
 
 # Update here if more source files are written
-SRCS = main.cpp
+SRCS = main.cpp MappedFile.cpp
 
 # Default rule: what happens when you just type 'make'
 all: $(TARGET)

@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+
+#include "MappedFile.h"
 using namespace std;
 
 string usage = "Usage: ./pmsearch [-p] <target_string> <file1> [file2 ... fileN]";
@@ -35,9 +37,18 @@ int main(int argc, char* argv[])
     target_str = argv[target_str_index];
     cout << "Target string is: " << target_str << endl;
 
-    // parses the filenames
+    // actually looking through now
     for (int i = target_str_index + 1; i < argc; i++) {
-        cout << "File to search in: " << argv[i] << endl;
+        try {
+            MappedFile mf{string(argv[i])};
+            auto offsets = mf.find_all(target_str);
+            for (auto offset : offsets) {
+                std::cout << argv[i]  << ":0x" << std::hex << std::uppercase << offset << std::endl;
+            }
+    
+        } catch (const std::exception& e) {
+            std::cerr << "Error processing " << argv[i] << ": " << e.what() << std::endl;
+        }
     }
 
     return EXIT_SUCCESS;
